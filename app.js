@@ -14,8 +14,12 @@ new Vue({
       this.monsterHealth = 100;
     },
     attack() {
-      this.monsterHealth -= this.calculateDamage(3, 10);
-      console.log(this.calculateDamage(3, 10));
+      let damage = this.calculateDamage(3, 10);
+      this.monsterHealth -= damage;
+      this.turns.unshift({
+        isPlayer: true,
+        text: "Player hits Monster for " + damage,
+      });
       if (this.checkWin()) {
         return;
       }
@@ -41,8 +45,13 @@ new Vue({
 
     // helper function
     monsterAttack() {
-      this.playerHealth -= this.calculateDamage(5, 12);
+      let damage = this.calculateDamage(5, 12);
+      this.playerHealth -= damage;
       this.checkWin();
+      this.turns.unshift({
+        isPlayer: true,
+        text: "Monster hits Player for " + damage,
+      });
     },
     calculateDamage(min, max) {
       return Math.floor(Math.random() * (max - min + 1) + min);
