@@ -20,6 +20,7 @@ new Vue({
         isPlayer: true,
         text: "Player hits Monster for " + damage,
       });
+      console.table(this.turns);
       if (this.checkWin()) {
         return;
       }
@@ -49,7 +50,7 @@ new Vue({
       this.playerHealth -= damage;
       this.checkWin();
       this.turns.unshift({
-        isPlayer: true,
+        isPlayer: false,
         text: "Monster hits Player for " + damage,
       });
     },
