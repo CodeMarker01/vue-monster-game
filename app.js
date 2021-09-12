@@ -6,6 +6,7 @@ new Vue({
     gameIsRunning: false,
     turns: [],
   },
+  getters: {},
   methods: {
     startGame() {
       this.gameIsRunning = true;
@@ -13,26 +14,37 @@ new Vue({
       this.monsterHealth = 100;
     },
     attack() {
-      let max = 10;
-      let min = 3;
-      let damage = Math.round((max * (Math.random() + min)) / (1 + min));
+      this.monsterHealth -= this.calculateDamage(3, 10);
+      if (this.checkWin()) {
+        return;
+      }
+      //   damage = Math.round((max * (Math.random() + min)) / (1 + min));
       //   let damege = Math.max(Math.floor(Math.random() * max) + 1, min);
-      this.monsterHealth -= damage;
+      this.playerHealth -= this.calculateDamage(5, 12);
+      this.checkWin();
+    },
+
+    // helper function
+    calculateDamage(min, max) {
+      return Math.round((max * (Math.random() + min)) / (1 + min));
+    },
+    checkWin() {
       if (this.monsterHealth <= 0) {
-        alert("Yon won!");
-        this.gameIsRunning = false;
-        return;
+        if (confirm("You won! New Game?")) {
+          this.startGame();
+        } else {
+          this.gameIsRunning = false;
+        }
+        return true;
+      } else if (this.playerHealth <= 0) {
+        if (confirm("You lost! New Game?")) {
+          this.startGame();
+        } else {
+          this.gameIsRunning = false;
+        }
+        return true;
       }
-      max = 12;
-      min = 5;
-      damage = Math.round((max * (Math.random() + min)) / (1 + min));
-      //   let damege = Math.max(Math.floor(Math.random() * max) + 1, min);
-      this.playerHealth -= damage;
-      if (this.playerHealth <= 0) {
-        alert("Yon lost!");
-        this.gameIsRunning = false;
-        return;
-      }
+      return false;
     },
   },
 });
