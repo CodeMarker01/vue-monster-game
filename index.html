@@ -12,10 +12,17 @@
         <div class="small-6 columns">
           <h1 class="text-center">YOU</h1>
           <div class="healthbar">
+            <!-- phan tram trong :style lay tu parent
+                    (tuc .healthbar)
+                    .healthbar ->> width: 80% cua html
+                -->
             <div
               class="healthbar text-center"
               style="background-color: green; margin: 0; color: white"
-            ></div>
+              :style="{width: playerHealth + '%'}"
+            >
+              {{playerHealth}}
+            </div>
           </div>
         </div>
         <div class="small-6 columns">
@@ -24,7 +31,10 @@
             <div
               class="healthbar text-center"
               style="background-color: green; margin: 0; color: white"
-            ></div>
+              :style="{width: monsterHealth + '%'}"
+            >
+              {{monsterHealth}}
+            </div>
           </div>
         </div>
       </section>
@@ -49,5 +59,6 @@
         </div>
       </section>
     </div>
+    <script src="./app.js"></script>
   </body>
 </html>
